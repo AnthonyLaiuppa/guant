@@ -17,6 +17,8 @@ A simple go implemention of the [Black-Scholes pricing model](https://en.wikiped
 #### Example usage:
 
 ```
+    var currPrice float64 = 180.34
+    var strike float64 = 185.00
     expiry := "2020-06-05"    
     t := guant.TimeToExpiry(expiry)
 
