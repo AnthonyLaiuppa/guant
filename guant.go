@@ -15,7 +15,7 @@ type Derivative struct {
 	R     float64 //r - risk free interest rate
 	Sigma float64 // sigma - std deviation of log returns (Implied volatility)
 	T     float64 //T - time to exercise date in years
-	Put   bool //Set to True if Put
+	Put   bool    //Set to True if Put
 }
 
 // Risk-free Interest Rate (Default 10-Year US Treasury Bond)
@@ -44,10 +44,10 @@ func blackScholesPut(a Derivative) float64 {
 }
 
 // Black-Scholes Method returns call or put value
-func BlackScholes(a Derivative) float64{
-	if a.Put{
+func BlackScholes(a Derivative) float64 {
+	if a.Put {
 		return blackScholesPut(a)
-	} else{
+	} else {
 		return blackScholesCall(a)
 	}
 }
@@ -78,9 +78,9 @@ func NewtonRaphson(a Derivative, C0 float64) float64 {
 		//Update our Ingredients sigma and calculate the option value
 		a.Sigma = vol
 		var functionValue float64
-		if a.Put{
+		if a.Put {
 			functionValue = blackScholesPut(a) - C0
-		} else{
+		} else {
 			functionValue = blackScholesCall(a) - C0
 		}
 		var vega float64 = a.S * a.N.Prob(a.d1()) * math.Sqrt(a.T)
@@ -95,7 +95,7 @@ func NewtonRaphson(a Derivative, C0 float64) float64 {
 func TimeToExpiry(d string) float64 {
 	currentTime := time.Now()
 	currentDate := currentTime.Format("2006-01-02")
-	a,err := date(currentDate)
+	a, err := date(currentDate)
 	if err != nil {
 		fmt.Errorf("Error Parsing current date")
 	}
@@ -117,10 +117,10 @@ func TimeToExpiry(d string) float64 {
 	return float64(days+1) / float64(365)
 }
 
-func date(s string) (time.Time,error) {
+func date(s string) (time.Time, error) {
 	d, err := time.Parse("2006-01-02", s)
-	if err != nil{
-		return d,nil
+	if err != nil {
+		return d, nil
 	}
-	return d,err
+	return d, err
 }
