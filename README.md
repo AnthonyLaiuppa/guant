@@ -1,4 +1,5 @@
-# guant
+# guant 
+![Go Report Card](https://goreportcard.com/badge/github.com/AnthonyLaiuppa/guant)  ![codecov](https://codecov.io/gh/AnthonyLaiuppa/guant/branch/master/graph/badge.svg) [![Build Status](https://travis-ci.org/AnthonyLaiuppa/guant.svg?branch=master)](https://travis-ci.org/AnthonyLaiuppa/guant) 
 
 A simple go implemention of the [Black-Scholes pricing model](https://en.wikipedia.org/wiki/Black%E2%80%93Scholes_model) and [Newton-Raphson Method](https://www.risklatte.xyz/Articles/QuantitativeFinance/QF135.php). 
 
