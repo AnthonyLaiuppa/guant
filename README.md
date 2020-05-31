@@ -7,10 +7,10 @@ A simple go implemention of the [Black-Scholes pricing model](https://en.wikiped
 ##### Black Scholes pricing model:
 ![Forumla provided by wikipedia](./pics/black-scholes.svg)
 
-##### Newton-Raphson Method
+##### Newton-Raphson Method:
 ![Newtons Method](./pics/newton.png)
 
-##### Derivative Struct
+##### Derivative Struct:
 ```	
         N     distuv.Normal  // Cumulative Normal Distribution function with {Mu: 0, Sigma: 1} 
    	S     float64        // S - stock price
