@@ -19,6 +19,7 @@ A simple go implemention of the [Black-Scholes pricing model](https://en.wikiped
    	R     float64        // r - risk free interest rate
    	Sigma float64        // sigma - std deviation of log returns (Implied volatility)
    	T     float64        // T - time to exercise date in years
+        Put   bool           // Put - set to true when computing Put option value
 ```
 
 #### Example usage:
