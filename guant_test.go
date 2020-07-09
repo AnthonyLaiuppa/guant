@@ -31,7 +31,7 @@ func TestD1(t *testing.T) {
 func TestD2(t *testing.T) {
 	ltd := getTestDerivative()
 	ltd.Sigma = 0.23979117049551366
-	var d2 float64 = ltd.d2()
+	var d2  = ltd.d2()
 	ans := "-1.188416"
 	d := fmt.Sprintf("%f", d2)
 	if d != ans {
@@ -103,10 +103,14 @@ func TestNewtonRaphson(t *testing.T) {
 
 // Test against 6/365 value
 func TestTimeToExpiry(t *testing.T) {
-	currDate := time.Now()
-	daysLater := currDate.AddDate(0, 0, 5)
+	currTime := time.Now()
+	currentDate := currTime.Format("2006-01-02")
+	daysLater := currTime.AddDate(0, 0, 5)
 	expiry := daysLater.Format("2006-01-02")
-	tte := TimeToExpiry(string(expiry))
+	tte, err  := TimeToExpiry(currentDate, expiry)
+	if err != nil {
+		t.Errorf("Time to expiry failed parsing %v", err)
+	}
 	ans := 0.01643835616438356
 	if tte != ans {
 		t.Errorf("TimeToExpiry incorrect calculation, got %f, wanted %f", tte, ans)

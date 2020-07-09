@@ -35,12 +35,12 @@ func (a *Derivative) d2() float64 {
 
 // Calculate Call value using Black-Scholes
 func blackScholesCall(a Derivative) float64 {
-	return ((a.S * a.N.CDF(a.d1())) - ((a.K * math.Exp(-a.R*a.T)) * a.N.CDF(a.d2())))
+	return (a.S * a.N.CDF(a.d1())) - ((a.K * math.Exp(-a.R*a.T)) * a.N.CDF(a.d2()))
 }
 
 // Calculate Put value using Black-Scholes
 func blackScholesPut(a Derivative) float64 {
-	return ((a.N.CDF(-1*a.d2()) * (a.K * math.Exp(-a.R*a.T))) - (a.S * a.N.CDF(-1*a.d1())))
+	return (a.N.CDF(-1 * a.d2()) * (a.K * math.Exp(-a.R * a.T))) - (a.S * a.N.CDF(-1 * a.d1()))
 }
 
 // Black-Scholes Method returns call or put value
@@ -54,8 +54,7 @@ func BlackScholes(a Derivative) float64 {
 
 // Iterative Method of calculating implied volatility in lieu of an ideal closed form solution
 func NewtonRaphson(a Derivative, C0 float64) float64 {
-
-	var tol float64 = 0.001
+	var tol = 0.001
 	var epsilon float64 = 1
 
 	//  Variables to log and manage number of iterations
@@ -63,7 +62,7 @@ func NewtonRaphson(a Derivative, C0 float64) float64 {
 	maxIter := 1000
 
 	// Starting Point for our IV calculations
-	var vol float64 = 0.50
+	var vol = 0.50
 
 	for epsilon > tol {
 		count += 1
@@ -83,7 +82,7 @@ func NewtonRaphson(a Derivative, C0 float64) float64 {
 		} else {
 			functionValue = blackScholesCall(a) - C0
 		}
-		var vega float64 = a.S * a.N.Prob(a.d1()) * math.Sqrt(a.T)
+		var vega = a.S * a.N.Prob(a.d1()) * math.Sqrt(a.T)
 		vol = -functionValue/vega + vol
 		epsilon = math.Abs((vol - origVol) / origVol)
 	}
@@ -92,16 +91,14 @@ func NewtonRaphson(a Derivative, C0 float64) float64 {
 }
 
 // Return time to expiry in years
-func TimeToExpiry(d string) float64 {
-	currentTime := time.Now()
-	currentDate := currentTime.Format("2006-01-02")
-	a, err := date(currentDate)
+func TimeToExpiry(provided string, expiry string) (float64, error) {
+	a, err := date(provided)
 	if err != nil {
-		fmt.Errorf("Error Parsing current date")
+		return 0, err
 	}
-	b, err := date(d)
+	b, err := date(expiry)
 	if err != nil {
-		fmt.Errorf("Error Parsing current date")
+		return 0, err
 	}
 	if a.After(b) {
 		a, b = b, a
@@ -114,7 +111,7 @@ func TimeToExpiry(d string) float64 {
 	days += b.YearDay()
 
 	//Time to exercise date in years = DBE/Years
-	return float64(days+1) / float64(365)
+	return float64(days+1) / float64(365), nil
 }
 
 func date(s string) (time.Time, error) {
